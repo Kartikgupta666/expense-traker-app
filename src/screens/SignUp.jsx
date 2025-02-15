@@ -32,7 +32,7 @@ const SignUp = () => {
                     </div>
                     <button type="submit" onClick={send} className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">SignUp</button>
                     <div className="mb-4 flex items-center">
-                        <Link to='/login' className="text-blue-700">Have an account.</Link>
+                        <Link to='/' className="text-blue-700">Have an account.</Link>
                     </div>
                 </form>
             </div>

@@ -16,10 +16,13 @@ const Dashboard = () => {
         const data = await retriveExpense()
         setExpenses(data)
     }
+
+  
+
     useEffect(() => {
         const user_id = localStorage.getItem('userId')
         if (!user_id) {
-            navigate('/login')
+            navigate('/')
         }
         getExpenses()
     }, [])
@@ -83,6 +86,8 @@ const Dashboard = () => {
                         </div>
                     </div>
 
+                    
+                
                     {/* Graph Component */}
                     <div className="w-full max-w-[600px] mx-auto">
                         <Graph amount={amounts} date={dates} />

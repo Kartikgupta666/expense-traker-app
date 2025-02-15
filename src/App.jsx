@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const userID = localStorage.getItem('userId')
     if (!userID) {
-      navigate('/login')
+      navigate('/')
     }
     else {
       navigate('/dashboard')
@@ -21,7 +21,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/" element={<Login />} />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/graph" element={<Graph />} />

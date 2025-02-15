@@ -13,7 +13,7 @@ const login = async (email, password) => {
         }
 
         console.log('User signed in:', data);
-        return data.user.id || null;
+        return data.user.id ;
     } catch (err) {
         console.error('Unexpected error during sign-in:', err);
         return null;
