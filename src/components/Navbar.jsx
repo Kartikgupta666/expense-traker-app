@@ -13,7 +13,7 @@ const Navbar = () => {
   const handelLogout = () => {
     localStorage.removeItem('userId')
     
-    navigate('/login')
+    navigate('/')
   }
 
 
