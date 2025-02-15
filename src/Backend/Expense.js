@@ -3,14 +3,14 @@ import supabase from './Supabase'
 
 const addExpense = async (amount, description) => {
     const date = new Date
-    
+
     try {
         const { error } = await supabase.from('expenses').insert(
             {
                 user_id: localStorage.getItem('userId'),
                 description: description,
                 amount: amount,
-                date: date.getDate() + "/" + (parseInt(date.getMonth()) + 1) + "/" + date.getFullYear()
+                date: date.getFullYear() + "/" + (parseInt(date.getMonth()) + 1) + "/" + date.getDate()
             }
         )
         if (error) {
@@ -23,7 +23,7 @@ const addExpense = async (amount, description) => {
     }
 }
 
-const retriveExpense = async() => {
+const retriveExpense = async () => {
     try {
         const userId = localStorage.getItem('userId')
         const { data, error } = await supabase.from('expenses').select('*').eq('user_id', userId)
@@ -40,4 +40,4 @@ const retriveExpense = async() => {
 }
 
 
-export { addExpense , retriveExpense}
+export { addExpense, retriveExpense }
