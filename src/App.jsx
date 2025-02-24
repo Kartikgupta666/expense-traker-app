@@ -6,6 +6,7 @@ import Graph from './components/Graph'
 import { Route, Routes } from "react-router-dom"
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import Toast from './components/Toast'
 function App() {
   const navigate = useNavigate()
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <Toast/>
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/signup" element={<SignUp />} />

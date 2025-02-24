@@ -1,17 +1,23 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { signIn } from '../Backend/Auth';
+import { notify } from '../components/Toast';
 const SignUp = () => {
     const [email, Setemail] = useState('')
     const [password, SetPassword] = useState('')
     const navigate = useNavigate()
     const send = async (e) => {
         e.preventDefault();
-        // console.log(email, password)
+        
         const data = await signIn(email, password)
-        // console.log(data)
-        localStorage.setItem('userId', data)
-        navigate("/dashboard")
+        if (data != null) {
+            localStorage.setItem('userId', data)
+            navigate("/dashboard")
+        }
+        else {
+            console.log("data is not defined")
+            notify("Invalid Credentials")
+        }
     }
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">

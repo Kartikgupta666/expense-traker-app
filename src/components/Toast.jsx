@@ -1,16 +1,13 @@
 import { ToastContainer, toast } from "react-toastify";
 import React from 'react'
 
+export const notify = (message) => {
+    toast.error(message, { position: "top-center",theme: "colored" })
+}
 const Toast = () => {
-    const notify = () => {
-        toast("this is the test")
-    }
     return (
         <>
-            <button onClick={notify}>
-                <ToastContainer />
-            </button>
-
+            <ToastContainer/>
         </>
     )
 }

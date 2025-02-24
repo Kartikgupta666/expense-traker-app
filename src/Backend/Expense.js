@@ -39,5 +39,10 @@ const retriveExpense = async () => {
     }
 }
 
+// email automation
 
-export { addExpense, retriveExpense }
+
+
+
+
+export { addExpense, retriveExpense  }

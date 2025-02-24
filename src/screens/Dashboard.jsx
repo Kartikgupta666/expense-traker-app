@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Graph from "../components/Graph"; // Import the Graph component
 import { addExpense, retriveExpense } from "../Backend/Expense";
 import { useNavigate } from "react-router-dom";
+
 const Dashboard = () => {
     const navigate = useNavigate()
     const [expenses, setExpenses] = useState([]);
@@ -22,6 +23,7 @@ const Dashboard = () => {
     useEffect(() => {
         const user_id = localStorage.getItem('userId')
         if (!user_id) {
+           
             navigate('/')
         }
         getExpenses()

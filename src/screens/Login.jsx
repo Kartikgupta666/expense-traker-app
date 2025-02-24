@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../Backend/Auth';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { notify } from '../components/Toast';
 
 const Login = () => {
     const [email, Setemail] = useState('')
@@ -9,13 +10,18 @@ const Login = () => {
 
     const send = async (e) => {
         e.preventDefault();
-        // console.log(email, password)
+        
         const data = await login(email, password)
-        // console.log(data)
-        localStorage.setItem('userId', data)
-        navigate("/dashboard")
+        if (data != null) {
+            localStorage.setItem('userId', data)
+            navigate("/dashboard")
+        }
+        else {
+            console.log("data is not defined")
+            notify("Invalid Credentials")
+        }
     }
-   
+
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md w-96">
