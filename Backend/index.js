@@ -60,7 +60,7 @@ async function main() {
 
 
 
-main()
 // Runs on the first day of every month at midnight
 cron.schedule('0 0 1 * *', () => {
+    main()
 });
