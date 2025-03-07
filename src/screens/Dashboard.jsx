@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Graph from "../components/Graph"; // Import the Graph component
 import { addExpense, retriveExpense, updateExpense } from "../Backend/Expense";
 import { useNavigate } from "react-router-dom";
-import Loader from "../components/loader";
+import Loader from "../components/Loader";
 const Dashboard = () => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false);
