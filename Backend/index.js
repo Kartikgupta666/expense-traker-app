@@ -9,6 +9,14 @@ app.use(express.json())
 
 const PORT = 8000
 
+
+app.get("/", (req,res)=> {
+try{
+return res.status(200).json({message:"this is the backend test route"})
+}
+catch(e){return res.status(400).json({error : e})}
+})
+
 app.listen(PORT, () => {
     console.log(`server connected on port ${PORT}`)
 })
