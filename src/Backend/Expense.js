@@ -26,7 +26,15 @@ const addExpense = async (amount, description) => {
 const retriveExpense = async () => {
     try {
         const userId = localStorage.getItem('userId')
-        const { data, error } = await supabase.from('expenses').select('*').eq('user_id', userId)
+    
+        
+        const { data, error } = await supabase
+            .from('expenses')
+            .select('*')
+            .eq('user_id', userId)
+            .gte('date', new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString())
+            .lt('date', new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).toISOString());
+
         if (error) {
             console.log(error);
             return error;
@@ -39,10 +47,22 @@ const retriveExpense = async () => {
     }
 }
 
+const updateExpense = async (id, amount, description) => {
+    try {
+        const { error } = await supabase.from('expenses').update({
+            amount: amount,
+            description: description
+        }).eq('id', id)
+        if (error) {
+            console.log(error)
+            return null;
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
 
 
 
-
-
-
-export { addExpense, retriveExpense  }
+export { addExpense, retriveExpense, updateExpense }
