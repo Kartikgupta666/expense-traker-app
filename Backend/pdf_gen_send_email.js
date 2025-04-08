@@ -2,6 +2,27 @@ const PDFDocument = require("pdfkit")
 const nodemailer = require("nodemailer")
 const fs = require('fs')
 
+// const transactions = [{
+//     date: "2023-10-01",
+//     amount: 100.00,
+//     description: "Groceries"
+// }, {
+//     date: "2023-10-02",
+//     amount: 50.00,
+//     description: "Transport"
+// }, {
+//     date: "2023-10-03",
+//     amount: 200.00,
+//     description: "Utilities"
+// }, {
+//     date: "2023-10-04",
+//     amount: 150.00,
+//     description: "Dining Out"
+// }, {
+//     date: "2023-10-05",
+//     amount: 75.00,
+//     description: "Entertainment"
+// }]
 
 const generatePDF = (filePath, transactions, email, callback) => {
     if (transactions.length === 0) {
@@ -20,7 +41,7 @@ const generatePDF = (filePath, transactions, email, callback) => {
         doc.fillColor("#333").fontSize(14).text(`Report for: ${email}`, { align: "center" });
 
         doc.moveDown(2);
-
+        const Y = doc.y
         // 🏛️ Define Table Column Positions and Widths
         const colX = [50, 200, 350]; // X positions for Date, Amount, Description
         const colWidth = [150, 100, 150]; // Column widths
@@ -30,9 +51,9 @@ const generatePDF = (filePath, transactions, email, callback) => {
         doc
             .font("Helvetica-Bold")
             .fontSize(12)
-            .text("Date", colX[0], doc.y, { width: colWidth[0], align: "left" })
-            .text("Amount", colX[1], doc.y, { width: colWidth[1], align: "right" })
-            .text("Description", colX[2], doc.y, { width: colWidth[2], align: "left" });
+            .text("Date", colX[0], Y, { width: colWidth[0], align: "center" })
+            .text("Amount", colX[1], Y, { width: colWidth[1], align: "center" })
+            .text("Description", colX[2], Y, { width: colWidth[2], align: "center" });
 
         // 🔹 Draw a Separator Line Below the Header
         doc.moveTo(50, doc.y + 5).lineTo(550, doc.y + 5).stroke();
@@ -52,28 +73,28 @@ const generatePDF = (filePath, transactions, email, callback) => {
             doc
                 .fillColor("#000")
                 .font("Helvetica")
-                .text(transaction.date, colX[0], y, { width: colWidth[0], align: "left" })
-                .text(transaction.amount.toFixed(2), colX[1], y, { width: colWidth[1], align: "right" })
-                .text(transaction.description, colX[2], y, { width: colWidth[2], align: "left" });
+                .text(transaction.date, colX[0], y, { width: colWidth[0], align: "center" })
+                .text(transaction.amount.toFixed(2), colX[1], y, { width: colWidth[1], align: "center" })
+                .text(transaction.description, colX[2], y, { width: colWidth[2], align: "center" });
 
             doc.moveDown();
         });
 
         doc.moveDown(2);
-
+        const BelowY = doc.y
         // 🔥 Total Amount Styling (Aligned with Amount Column)
         doc
             .fillColor("#ff5733")
             .font("Helvetica-Bold")
             .fontSize(14)
-            .text("Total Amount", colX[0], doc.y, { width: colWidth[0], align: "left" })
+            .text("Total Amount", colX[0], BelowY, { width: colWidth[0], align: "left" })
             .fillColor("#28a745")
-            .text(`₹ ${sum.toFixed(2)}`, colX[1], doc.y, { width: colWidth[1], align: "right" });
+            .text(`₹ ${sum.toFixed(2)}`, colX[1], BelowY, { width: colWidth[1], align: "right" });
 
         // ✅ Finalize PDF
         doc.end();
 
-        stream.on("finish",() => {
+        stream.on("finish", () => {
             console.log("PDF Created: " + filePath);
             callback();
         });
@@ -107,7 +128,7 @@ const sendEmailWithPDF = async (filePath, recipientEmail) => {
                 }
             ]
         };
-        
+
         // Send email
         await transporter.sendMail(mailOptions);
         console.log("Email sent successfully!");
