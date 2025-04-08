@@ -2,7 +2,7 @@ const express = require('express')
 const cron = require('node-cron')
 const supabase = require('./Supabase')
 const { generatePDF, sendEmailWithPDF } = require('./pdf_gen_send_email')
-
+const fs = require('fs')
 const app = express()
 app.use(express.json())
 
@@ -56,9 +56,15 @@ async function main() {
                 const filePath = `${user.email}_transactions.pdf`;
                 generatePDF(filePath, transactions, user.email, () => {
                     sendEmailWithPDF(filePath, user.email);
+                    fs.unlink(filePath, (err) => {
+                        if (err) console.error(`Failed to delete file ${filePath}:`, err);
+                    });
                 });
             } catch (error) {
                 console.error(`Failed to fetch transactions for ${user.email}:`, error);
+                fs.unlink(filePath, (err) => {
+                    if (err) console.error(`Failed to delete file ${filePath}:`, err);
+                });
             }
         }
     } catch (error) {
